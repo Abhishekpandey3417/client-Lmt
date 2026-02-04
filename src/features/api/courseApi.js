@@ -1,13 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const COURSE_API = "http://localhost:8080/api/v1/course";
+const COURSE_API = `${import.meta.env.VITE_API_URL}/course`;
 
 export const courseApi = createApi({
   reducerPath: "courseApi",
   baseQuery: fetchBaseQuery({
     baseUrl: COURSE_API,
     credentials: "include",
-
     fetchFn: (input, init) =>
       fetch(input, {
         ...init,
@@ -15,7 +14,6 @@ export const courseApi = createApi({
       }),
   }),
 
-  // ❌ DO NOT put User here
   tagTypes: ["Lectures"],
 
   endpoints: (builder) => ({
@@ -53,7 +51,6 @@ export const courseApi = createApi({
       }),
     }),
 
-    // ✅ enrollment ONLY updates backend
     enrollCourse: builder.mutation({
       query: (courseId) => ({
         url: `/courses/${courseId}/enroll`,
@@ -62,7 +59,6 @@ export const courseApi = createApi({
       async onQueryStarted(_, { queryFulfilled, dispatch }) {
         try {
           const { data } = await queryFulfilled;
-
           if (data?.user) {
             dispatch({
               type: "auth/userLoggedIn",

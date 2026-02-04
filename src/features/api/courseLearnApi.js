@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const COURSE_LEARN_API = "http://localhost:8080/api/v1";
+const COURSE_LEARN_API = `${import.meta.env.VITE_API_URL}`;
 
 export const courseLearnApi = createApi({
   reducerPath: "courseLearnApi",
@@ -21,7 +21,7 @@ export const courseLearnApi = createApi({
         url: `/course-learn/${courseId}/lecture/${lectureId}`,
         method: "PUT",
       }),
-      invalidatesTags: ["CourseLearn"], // 🔥 THIS IS THE FIX
+      invalidatesTags: ["CourseLearn"],
     }),
 
     completeCourse: builder.mutation({

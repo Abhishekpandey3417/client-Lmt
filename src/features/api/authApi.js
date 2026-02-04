@@ -4,7 +4,7 @@ import { userLoggedIn, userLoggedOut } from "../authSlice";
 export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:8080/api/v1/user/",
+    baseUrl: `${import.meta.env.VITE_API_URL}/user`,
     credentials: "include",
   }),
   tagTypes: ["User"],
@@ -12,7 +12,7 @@ export const authApi = createApi({
   endpoints: (builder) => ({
     registerUser: builder.mutation({
       query: (data) => ({
-        url: "register",
+        url: "/register",
         method: "POST",
         body: data,
       }),
@@ -20,38 +20,47 @@ export const authApi = createApi({
 
     loginUser: builder.mutation({
       query: (data) => ({
-        url: "login",
+        url: "/login",
         method: "POST",
         body: data,
       }),
       async onQueryStarted(_, { queryFulfilled, dispatch }) {
-        const { data } = await queryFulfilled;
-        if (data?.user) {
-          dispatch(userLoggedIn({ user: data.user }));
+        try {
+          const { data } = await queryFulfilled;
+          if (data?.user) {
+            dispatch(userLoggedIn({ user: data.user }));
+          }
+        } catch (err) {
+          console.error("Login failed", err);
         }
       },
     }),
 
     loadUser: builder.query({
-      query: () => "profile",
+      query: () => "/profile",
       providesTags: ["User"],
       async onQueryStarted(_, { queryFulfilled, dispatch }) {
-        const { data } = await queryFulfilled;
-        if (data?.user) {
-          dispatch(userLoggedIn({ user: data.user }));
+        try {
+          const { data } = await queryFulfilled;
+          if (data?.user) {
+            dispatch(userLoggedIn({ user: data.user }));
+          }
+        } catch (err) {
+          console.error("Load user failed", err);
         }
       },
     }),
 
     logoutUser: builder.mutation({
       query: () => ({
-        url: "logout",
+        url: "/logout",
         method: "GET",
       }),
       async onQueryStarted(_, { dispatch }) {
         dispatch(userLoggedOut());
       },
     }),
+
     updateUser: builder.mutation({
       query: (formData) => ({
         url: "/profile/update",
@@ -70,4 +79,3 @@ export const {
   useLogoutUserMutation,
   useUpdateUserMutation,
 } = authApi;
-
