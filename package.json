@@ -11,9 +11,10 @@
 
   "scripts": {
   "dev": "vite",
-  "build": "npx vite build",
-  "preview": "npx vite preview"
+  "build": "npm exec vite build",
+  "preview": "npm exec vite preview"
 },
+
 
 
   "dependencies": {
