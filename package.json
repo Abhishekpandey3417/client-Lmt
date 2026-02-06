@@ -9,11 +9,12 @@
 },
 
 
-  "scripts": {
+ "scripts": {
   "dev": "vite",
-  "build": "npm exec vite build",
-  "preview": "npm exec vite preview"
+  "build": "node ./node_modules/vite/bin/vite.js build",
+  "preview": "node ./node_modules/vite/bin/vite.js preview"
 },
+
 
 
 
