@@ -1,24 +1,26 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const COURSE_LEARN_API = `${import.meta.env.VITE_API_URL}`;
+const COURSE_LEARN_API = `${import.meta.env.VITE_API_URL}/course-learn`;
 
 export const courseLearnApi = createApi({
   reducerPath: "courseLearnApi",
+
   baseQuery: fetchBaseQuery({
     baseUrl: COURSE_LEARN_API,
     credentials: "include",
   }),
+
   tagTypes: ["CourseLearn"],
 
   endpoints: (builder) => ({
     getCourseLearn: builder.query({
-      query: (courseId) => `/course-learn/${courseId}`,
+      query: (courseId) => `/${courseId}`,
       providesTags: ["CourseLearn"],
     }),
 
     updateLectureLearn: builder.mutation({
       query: ({ courseId, lectureId }) => ({
-        url: `/course-learn/${courseId}/lecture/${lectureId}`,
+        url: `/${courseId}/lecture/${lectureId}`,
         method: "PUT",
       }),
       invalidatesTags: ["CourseLearn"],
@@ -26,7 +28,7 @@ export const courseLearnApi = createApi({
 
     completeCourse: builder.mutation({
       query: (courseId) => ({
-        url: `/course-learn/${courseId}/completed`,
+        url: `/${courseId}/completed`,
         method: "PUT",
       }),
       invalidatesTags: ["CourseLearn"],
@@ -34,7 +36,7 @@ export const courseLearnApi = createApi({
 
     incompleteCourse: builder.mutation({
       query: (courseId) => ({
-        url: `/course-learn/${courseId}/incompleted`,
+        url: `/${courseId}/incompleted`,
         method: "PUT",
       }),
       invalidatesTags: ["CourseLearn"],

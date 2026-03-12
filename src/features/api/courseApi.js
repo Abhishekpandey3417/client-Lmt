@@ -4,14 +4,10 @@ const COURSE_API = `${import.meta.env.VITE_API_URL}/course`;
 
 export const courseApi = createApi({
   reducerPath: "courseApi",
+
   baseQuery: fetchBaseQuery({
     baseUrl: COURSE_API,
     credentials: "include",
-    fetchFn: (input, init) =>
-      fetch(input, {
-        ...init,
-        cache: "no-store",
-      }),
   }),
 
   tagTypes: ["Lectures"],
@@ -39,7 +35,10 @@ export const courseApi = createApi({
           queryString += `&sortByPrice=${encodeURIComponent(sortByPrice)}`;
         }
 
-        return { url: queryString, method: "GET" };
+        return {
+          url: queryString,
+          method: "GET",
+        };
       },
       refetchOnMountOrArgChange: true,
     }),
@@ -56,9 +55,11 @@ export const courseApi = createApi({
         url: `/courses/${courseId}/enroll`,
         method: "POST",
       }),
+
       async onQueryStarted(_, { queryFulfilled, dispatch }) {
         try {
           const { data } = await queryFulfilled;
+
           if (data?.user) {
             dispatch({
               type: "auth/userLoggedIn",
@@ -66,7 +67,7 @@ export const courseApi = createApi({
             });
           }
         } catch (err) {
-          console.error("Enroll failed", err);
+          console.error("Enroll failed:", err);
         }
       },
     }),

@@ -24,6 +24,7 @@ export const authApi = createApi({
         method: "POST",
         body: data,
       }),
+
       async onQueryStarted(_, { queryFulfilled, dispatch }) {
         try {
           const { data } = await queryFulfilled;
@@ -31,7 +32,7 @@ export const authApi = createApi({
             dispatch(userLoggedIn({ user: data.user }));
           }
         } catch (err) {
-          console.error("Login failed", err);
+          console.error("Login failed:", err);
         }
       },
     }),
@@ -39,14 +40,16 @@ export const authApi = createApi({
     loadUser: builder.query({
       query: () => "/profile",
       providesTags: ["User"],
+
       async onQueryStarted(_, { queryFulfilled, dispatch }) {
         try {
           const { data } = await queryFulfilled;
+
           if (data?.user) {
             dispatch(userLoggedIn({ user: data.user }));
           }
         } catch (err) {
-          console.error("Load user failed", err);
+          console.error("Load user failed:", err?.error || err);
         }
       },
     }),
@@ -56,6 +59,7 @@ export const authApi = createApi({
         url: "/logout",
         method: "GET",
       }),
+
       async onQueryStarted(_, { dispatch }) {
         dispatch(userLoggedOut());
       },
