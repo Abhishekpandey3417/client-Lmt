@@ -52,13 +52,19 @@ const Login = () => {
   const navigate = useNavigate();
 
   const changeInputHandler = (e, type) => {
-    const { name, value } = e.target;
-    if (type === "signup") {
-      setSignupInput({ ...signupInput, [name]: value });
-    } else {
-      setLoginInput({ ...loginInput, [name]: value });
-    }
-  };
+  let { name, value } = e.target;
+
+  // Allow only letters and spaces for name
+  if (type === "signup" && name === "name") {
+    value = value.replace(/[^a-zA-Z\s]/g, "");
+  }
+
+  if (type === "signup") {
+    setSignupInput({ ...signupInput, [name]: value });
+  } else {
+    setLoginInput({ ...loginInput, [name]: value });
+  }
+};
 
   const handleRegistration = async (type) => {
     const inputData = type === "signup" ? signupInput : loginInput;

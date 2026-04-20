@@ -1,8 +1,13 @@
- {
-    "compilerOptions": {
-    "baseUrl": ".",
+{
+  "compilerOptions": {
+    "moduleResolution": "bundler",
+    "target": "ESNext",
+    "module": "ESNext",
+
     "paths": {
       "@/*": ["./src/*"]
-     }
+    },
+
+    "ignoreDeprecations": "6.0"
   }
 }
