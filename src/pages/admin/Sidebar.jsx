@@ -16,7 +16,7 @@ const Sidebar = () => {
       {/* Sidebar */}
       <aside
         className="
-          hidden lg:block
+          block
           w-[260px]
           border-r border-gray-200 dark:border-gray-800
           bg-gray-100 dark:bg-gray-900
@@ -27,11 +27,10 @@ const Sidebar = () => {
         <div className="mt-16 space-y-2">
           <Link
             to="/admin/dashboard"
-            className={`${linkBase} ${
-              location.pathname.includes("dashboard")
+            className={`${linkBase} ${location.pathname.includes("dashboard")
                 ? linkActive
                 : linkInactive
-            }`}
+              }`}
           >
             <ChartNoAxesColumn size={20} />
             <span className="font-medium">Dashboard</span>
@@ -39,11 +38,10 @@ const Sidebar = () => {
 
           <Link
             to="/admin/courses"
-            className={`${linkBase} ${
-              location.pathname.includes("courses")
+            className={`${linkBase} ${location.pathname.includes("courses")
                 ? linkActive
                 : linkInactive
-            }`}
+              }`}
           >
             <SquareLibrary size={20} />
             <span className="font-medium">Courses</span>

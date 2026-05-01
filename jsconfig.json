@@ -1,13 +1,13 @@
 {
   "compilerOptions": {
-    "moduleResolution": "bundler",
-    "target": "ESNext",
-    "module": "ESNext",
-
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
-    },
-
-    "ignoreDeprecations": "6.0"
-  }
+      "@/*": [
+        "./src/*"
+      ]
+    }
+  },
+  "exclude": [
+    "node_modules"
+  ]
 }
